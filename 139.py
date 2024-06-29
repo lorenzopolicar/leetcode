@@ -18,3 +18,4 @@ class Solution:
             return backtrack(i+1, current_sum + nums[i]) or backtrack(i+1, current_sum)
         
         return backtrack(0, 0)
+    
