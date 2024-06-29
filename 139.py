@@ -1,16 +1,20 @@
+from functools import cache
+
+
 class Solution:
-    def wordBreak(self, s: str, wordDict: list[str]) -> bool:
+    def canPartition(self, nums: list[int]) -> bool:
+        total = sum(nums)
+        target = total // 2
+
+        if (total % 2): return False
         
         @cache
-        def backtrack(remaining):
-            if not remaining:
+        def backtrack(i, current_sum):
+            if i >= len(nums) or current_sum > target:
+                return False
+            if current_sum == target:
                 return True
-
-            for word in wordDict:
-                if remaining[0:len(word)] == word:
-                    if backtrack(remaining[len(word):]):
-                        return True
             
-            return False
-
-        return backtrack(s)
+            return backtrack(i+1, current_sum + nums[i]) or backtrack(i+1, current_sum)
+        
+        return backtrack(0, 0)
